@@ -97,26 +97,31 @@
                 <button type="submit">create account</button>
             </form>
             <!-- Form for story -->
-            <form
-                action="#"
-                id="story-form"
-                class="account-form hidden"
-                method="POST"
-            >
-                <h5>Add Story</h5>
-                <div class="account-form">
-                    <label for="story-add">story</label>
-                    <input id="story-add">
-                </div>
-            </form>
-        </section>
-        <!-- Library JS & our JS -->
-        <script src="https://unpkg.com/jquery"></script>
-        <script src="https://unpkg.com/axios/dist/axios.js"></script>
-        <script src="js/models.js"></script>
-        <script src="js/main.js"></script>
-        <script src="js/nav.js"></script>
-        <script src="js/user.js"></script>
-        <script src="js/stories.js"></script>
-    </body>
-</html>
+            <form action="#" method="post">
+                <h4>Add Story</h4>
+                <form id="story-form" class="account-form hidden" method="post">
+                    <div class="login-input">
+                        <label for="story-title">Title</label>
+                        <input id="story-title">
+                    </div>
+                    <div class="login-input">
+                        <label for="story-author">Author</label>
+                        <input id="story-author">
+                    </div>
+                    <div class="login-input">
+                        <label for="story-url">URL</label>
+                        <input id="story-url">
+                    </div>
+                    <button type="submit">Add story</button>
+                </form>
+            </section>
+            <!-- Library JS & our JS -->
+            <script src="https://unpkg.com/jquery"></script>
+            <script src="https://unpkg.com/axios/dist/axios.js"></script>
+            <script src="js/models.js"></script>
+            <script src="js/main.js"></script>
+            <script src="js/nav.js"></script>
+            <script src="js/user.js"></script>
+            <script src="js/stories.js"></script>
+        </body>
+    </html>
