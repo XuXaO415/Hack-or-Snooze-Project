@@ -34,3 +34,11 @@ function updateNavOnLogin() {
     $navLogOut.show();
     $navUserProfile.text(`${currentUser.username}`).show();
 }
+
+/** When user clicks on navbar submit link, user will be rerouted to submit page */
+/** this function is connected to stories.js-- will later call the .addStory method */
+function navbarSubmit(evt) {
+    console.debug('navbarSubmit', evt);
+    hidePageComponents();
+    putStoriesOnPage();
+}
