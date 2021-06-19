@@ -6,10 +6,10 @@ let storyList;
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
-    storyList = await StoryList.getStories();
-    $storiesLoadingMsg.remove();
+  storyList = await StoryList.getStories();
+  $storiesLoadingMsg.remove();
 
-    putStoriesOnPage();
+  putStoriesOnPage();
 }
 
 /**
@@ -20,10 +20,10 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-    // console.debug("generateStoryMarkup", story);
+  // console.debug("generateStoryMarkup", story);
 
-    const hostName = story.getHostName();
-    return $(`
+  const hostName = story.getHostName();
+  return $(`
       <li id="${story.storyId}">
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -38,15 +38,60 @@ function generateStoryMarkup(story) {
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
 function putStoriesOnPage() {
-    console.debug('putStoriesOnPage');
+  console.debug('putStoriesOnPage');
 
-    $allStoriesList.empty();
+  $allStoriesList.empty();
 
-    // loop through all of our stories and generate HTML for them
-    for (let story of storyList.stories) {
-        const $story = generateStoryMarkup(story);
-        $allStoriesList.append($story);
-    }
+  // loop through all of our stories and generate HTML for them
+  for (let story of storyList.stories) {
+    const $story = generateStoryMarkup(story);
+    $allStoriesList.append($story);
+  }
 
-    $allStoriesList.show();
+  $allStoriesList.show();
 }
+/* Write a fxn that retrieves data from form and then puts that new 
+story on the page */
+function addNewStory(evt) {
+  console.debug('addNewStory', evt);
+  $allStoriesList.empty();
+  //this evt method prevents the browser's default behavior for events
+  //In this case, we are preventing the form from automatically submitting when btn is clicked
+  //This gives us a chance to fetch the API
+  evt.preventDefault();
+
+  for (let addStory of storyList.stories) {
+    const $addStory = generateStoryMarkup(addStory);
+    $addStory.$allStoriesList.append(story);
+  }
+  $addStory.add();
+
+
+}
+
+// async addStory(user, { author, title, url }) {
+
+//   const token = user.loginToken;
+//   //console.log(token);
+
+//   //fetch data/response from url endpoint
+//   const response = await axios({
+//     method: 'POST',
+//     url: `${BASE_URL}/stories`,
+//     data: {
+//       token,
+//       story: {
+//         author,
+//         title,
+//         url,
+//       },
+//     },
+//   });
+//   //console.log(response.data);
+
+//   let newStory = new Story(response.data.story);
+//   this.stories.unshift(newStory);
+//   user.ownStories.unshift(newStory);
+//   return newStory;
+//   // } catch (error) {
+// }
