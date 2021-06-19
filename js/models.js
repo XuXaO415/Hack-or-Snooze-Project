@@ -84,28 +84,22 @@ class StoryList {
   } \
 }"; */
 
+
   async addStory(user, { author, title, url }) {
     //user, newStory
-    // const token = await user;
-    // let newStory = await axios({
-    //   method: 'POST',
-    //   url: `${BASE_URL}/stories`,
-    //   data: { token, story: { author, title, url } },
-    // });
-    // const res = await axios.post(`${BASE_URL}/stories`, newStory);
-    // console.log(res);
-    // return newStory;
 
-    // try {
-    const token = user.loginToken;
-    //console.log(token);
 
-    //fetch data/response from url endpoint
+    //   // try {
+    //const token = user.loginToken;
+    //   //console.log(token);
+
+    //   //fetch data/response from url endpoint
     const response = await axios({
       method: 'POST',
+      message: 'Story successfully added',
       url: `${BASE_URL}/stories`,
       data: {
-        token,
+        //token: user.loginToken,
         story: {
           author,
           title,
@@ -113,23 +107,24 @@ class StoryList {
         },
       },
     });
-    //console.log(response.data);
-
-    let newStory = new Story(response.data.story);
+    console.log(response.data);
+    //From solutions
+    const newStory = new Story(response.data.story);
     this.stories.unshift(newStory);
     user.ownStories.unshift(newStory);
     return newStory;
-    // } catch (error) {
+    //   // } catch (error) {
   }
 
   async removeStory(storyId, user) {
     //storyId = auto generated ID to reference story docs in routes
     //need token to link to user -- user is the one who can remove story
-    const token = user.loginToken();
+    //const token = user.loginToken;
     //console.log(token);
     //why do we not us const res? -- this is not a response
     await axios({
       method: 'DELETE',
+      message: 'Story deleted successfully',
       url: `${BASE_URL}/stories/${storyId}`,
       data: {
         token: user.loginToken
@@ -265,13 +260,24 @@ class User {
     }
   }
 
-  // async addFavorite() {
+  async addFavorite(storyId) {
+    return this.toggleFavs(storyId, 'POST');
 
-  // }
+  }
 
-  // async deleteFavorites() {
+  async deleteFavorites(storyId) {
+    return this.toggleFavs(storyId, 'GET');
 
-  // }
+  }
 
-  // async
+  async toggleFavs(storyId) {
+    await axios({
+      method: 'PATCH',
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+      data: { token: this.loginToken }
+    });
+    await this.getDetail(storyId);
+    return this;
+
+  }
 }

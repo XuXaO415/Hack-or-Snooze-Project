@@ -25,6 +25,14 @@ function navLoginClick(evt) {
 
 $navLogin.on('click', navLoginClick);
 
+/** When user clicks on navbar submit link, user will be rerouted to submit page */
+/** this function is connected to stories.js-- will later call the .addStory method */
+function navbarSubmit(evt) {
+    console.debug('navbarSubmit', evt);
+    hidePageComponents();
+    $submitForm.show();
+}
+
 /** When a user first logins in, update the navbar to reflect that. */
 
 function updateNavOnLogin() {
@@ -35,10 +43,3 @@ function updateNavOnLogin() {
     $navUserProfile.text(`${currentUser.username}`).show();
 }
 
-/** When user clicks on navbar submit link, user will be rerouted to submit page */
-/** this function is connected to stories.js-- will later call the .addStory method */
-function navbarSubmit(evt) {
-    console.debug('navbarSubmit', evt);
-    hidePageComponents();
-    putStoriesOnPage();
-}

@@ -52,46 +52,15 @@ function putStoriesOnPage() {
 }
 /* Write a fxn that retrieves data from form and then puts that new 
 story on the page */
-function addNewStory(evt) {
-  console.debug('addNewStory', evt);
-  $allStoriesList.empty();
+// async function addNewStory(evt) {
+//   console.debug('addNewStory', evt);
+//   $allStoriesList.empty();
   //this evt method prevents the browser's default behavior for events
   //In this case, we are preventing the form from automatically submitting when btn is clicked
   //This gives us a chance to fetch the API
-  evt.preventDefault();
+  //evt.preventDefault();
+//}
 
-  for (let addStory of storyList.stories) {
-    const $addStory = generateStoryMarkup(addStory);
-    $addStory.$allStoriesList.append(story);
-  }
-  $addStory.add();
-
+function addNewStory(user, {author, title, url, }) {
 
 }
-
-// async addStory(user, { author, title, url }) {
-
-//   const token = user.loginToken;
-//   //console.log(token);
-
-//   //fetch data/response from url endpoint
-//   const response = await axios({
-//     method: 'POST',
-//     url: `${BASE_URL}/stories`,
-//     data: {
-//       token,
-//       story: {
-//         author,
-//         title,
-//         url,
-//       },
-//     },
-//   });
-//   //console.log(response.data);
-
-//   let newStory = new Story(response.data.story);
-//   this.stories.unshift(newStory);
-//   user.ownStories.unshift(newStory);
-//   return newStory;
-//   // } catch (error) {
-// }
