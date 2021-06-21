@@ -72,7 +72,8 @@ class StoryList {
    * - user - the current instance of User who will post the story
    * - obj of {title, author, url}
    *
-   * Returns the new Story instance -- create a new story --> Token Required. The fields username, title, author, and url are required.
+   * Returns the new Story instance -- create a new story --> Token Required. The data fields are:
+   *  username, title, author, and url
    */
 
   /** 
@@ -84,45 +85,49 @@ class StoryList {
   } \
 }"; */
 
+  // var body = "{ \
+  //   'user': { \
+  //     'username': 'test', \
+  //     'password': 'password' \
+  //   } \
 
-  async addStory(user, { author, title, url }) {
-    //user, newStory
+  //user, newStory
 
 
-    //   // try {
-    //const token = user.loginToken;
-    //   //console.log(token);
+  /* Response body from hack or snooze */
+  //   "stories": [
+  //     {
+  //       "author": "Elie Schoppik",
+  //       "createdAt": "2018-11-14T01:36:12.710Z",
+  //       "storyId": "991b95a0-507f-472e-9f94-e3bd4b6fe882",
+  //       "title": "Four Tips for Moving Faster as a Developer",
+  //       "updatedAt": "2018-11-14T01:36:12.710Z",
+  //       "url": "https://www.rithmschool.com/blog/developer-productivity",
+  //       "username": "test"
+  //     }
+  //   ]
+  // }
 
-    //   //fetch data/response from url endpoint
+  async addStory(user, { title, author, url }) {
     const response = await axios({
       method: 'POST',
-      message: 'Story successfully added',
       url: `${BASE_URL}/stories`,
-      data: {
-        //token: user.loginToken,
-        story: {
-          author,
-          title,
-          url,
-        },
-      },
+      data: { token: user.loginToken, story: { title, author, url, } },
     });
-    console.log(response.data);
-    //From solutions
-    const newStory = new Story(response.data.story);
-    this.stories.unshift(newStory);
-    user.ownStories.unshift(newStory);
+    console.log(response.data)
+    let newStory = new Story(response.data.story);
     return newStory;
-    //   // } catch (error) {
+
   }
+
 
   async removeStory(storyId, user) {
     //storyId = auto generated ID to reference story docs in routes
     //need token to link to user -- user is the one who can remove story
     //const token = user.loginToken;
     //console.log(token);
-    //why do we not us const res? -- this is not a response
-    await axios({
+
+    const response = await axios({
       method: 'DELETE',
       message: 'Story deleted successfully',
       url: `${BASE_URL}/stories/${storyId}`,
@@ -260,24 +265,26 @@ class User {
     }
   }
 
-  async addFavorite(storyId) {
-    return this.toggleFavs(storyId, 'POST');
+  /*  Will add this in later */
 
-  }
+  //   async addFavorite(storyId) {
+  //     return this.toggleFavs(storyId, 'POST');
 
-  async deleteFavorites(storyId) {
-    return this.toggleFavs(storyId, 'GET');
+  //   }
 
-  }
+  //   async deleteFavorites(storyId) {
+  //     return this.toggleFavs(storyId, 'GET');
 
-  async toggleFavs(storyId) {
-    await axios({
-      method: 'PATCH',
-      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
-      data: { token: this.loginToken }
-    });
-    await this.getDetail(storyId);
-    return this;
+  //   }
 
-  }
+  //   async toggleFavs(storyId) {
+  //     await axios({
+  //       method: 'PATCH',
+  //       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+  //       data: { token: this.loginToken }
+  //     });
+  //     await this.getDetail(storyId);
+  //     return this;
+
+  //   }
 }
