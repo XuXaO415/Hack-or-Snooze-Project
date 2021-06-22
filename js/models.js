@@ -95,33 +95,23 @@ class StoryList {
 
 
   /* Response body from hack or snooze */
-  //   "stories": [
-  //     {
-  //       "author": "Elie Schoppik",
-  //       "createdAt": "2018-11-14T01:36:12.710Z",
-  //       "storyId": "991b95a0-507f-472e-9f94-e3bd4b6fe882",
-  //       "title": "Four Tips for Moving Faster as a Developer",
-  //       "updatedAt": "2018-11-14T01:36:12.710Z",
-  //       "url": "https://www.rithmschool.com/blog/developer-productivity",
-  //       "username": "test"
-  //     }
-  //   ]
+
   // }
 
   async addStory(user, { title, author, url }) {
     const response = await axios({
       method: 'POST',
       url: `${BASE_URL}/stories`,
-      data: { token: user.loginToken, story: { title, author, url, } },
+      data: { token: user.loginToken, story: { title, author, url } },
     });
-    console.log(response.data)
+    console.log(response.data);
     let newStory = new Story(response.data.story);
     return newStory;
 
   }
 
 
-  async removeStory(storyId, user) {
+  async removeStory(storyId) {
     //storyId = auto generated ID to reference story docs in routes
     //need token to link to user -- user is the one who can remove story
     //const token = user.loginToken;
@@ -132,15 +122,13 @@ class StoryList {
       message: 'Story deleted successfully',
       url: `${BASE_URL}/stories/${storyId}`,
       data: {
-        token: user.loginToken
+        token: user.loginToken, story: { author, createdAt, storyId, title, updatedAt, url, username }
       },
     });
-    //From solutions -- filter out the story whose ID we are removing and bind to stories using this
-    this.stories = this.stories.filter(story => story.storyId !== storyId);
-
-    // do the same thing for the user's list of stories & their favorites
-    user.ownStories = user.ownStories.filter(s => s.storyId !== storyId);
-    user.favorites = user.favorites.filter(s => s.storyId !== storyId);
+    //console.log(response.data);
+    console.log(message);
+    let deleteStory = delete Story(response.data);
+    return deleteStory;
   }
 }
 
@@ -265,26 +253,26 @@ class User {
     }
   }
 
+  async addFavorite(story) {
+
+  }
+
+
   /*  Will add this in later */
 
-  //   async addFavorite(storyId) {
-  //     return this.toggleFavs(storyId, 'POST');
+  // async addFavorite(username, storyId) {
+  //   const response = await axios({
+  //     message: 'Favorite added successfully!',
+  //     method: 'POST',
+  //     url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+  //     data: { token: user.tokenLogin, story: { author, createdAt, storyId, title, updatedAt, url, username } },
+  //   });
+  //   let addedNewFavorite = new Favorites(response.data.user);
+  //   return addedNewFavorite;
 
-  //   }
+  // }
 
   //   async deleteFavorites(storyId) {
   //     return this.toggleFavs(storyId, 'GET');
 
-  //   }
-
-  //   async toggleFavs(storyId) {
-  //     await axios({
-  //       method: 'PATCH',
-  //       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
-  //       data: { token: this.loginToken }
-  //     });
-  //     await this.getDetail(storyId);
-  //     return this;
-
-  //   }
 }

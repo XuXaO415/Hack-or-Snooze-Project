@@ -50,17 +50,14 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
-/* Write a fxn that retrieves data from form and then puts that new 
+/* Write a fxn that retrieves data from form and then puts that new
 story on the page */
 // async function addNewStory(evt) {
 //   console.debug('addNewStory', evt);
 //   $allStoriesList.empty();
-  //this evt method prevents the browser's default behavior for events
-  //In this case, we are preventing the form from automatically submitting when btn is clicked
-  //This gives us a chance to fetch the API
-  //evt.preventDefault();
+//this evt method prevents the browser's default behavior for events
+//In this case, we are preventing the form from automatically submitting when btn is clicked
+//This gives us a chance to fetch the API
+//evt.preventDefault();
 //}
 
-function addNewStory(user, {author, title, url, }) {
-
-}

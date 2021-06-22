@@ -27,19 +27,16 @@ $navLogin.on('click', navLoginClick);
 
 /** When user clicks on navbar submit link, user will be rerouted to submit page */
 /** this function is connected to stories.js-- will later call the .addStory method */
-function navbarSubmit(evt) {
-    console.debug('navbarSubmit', evt);
-    hidePageComponents();
-    $submitForm.show();
+//Named this fxn from schematics updateNavOnLogin will later be used to updateUIOnUserLogin
+function updateNavOnLogin(evt) {
+    console.debug('updateNavOnLogin', evt);
+    //What will be displayed on the page after user click evt
+    putStoriesOnPage();
+    $loginForm.show();
+    $signupForm.show();
+    $loginForm.hide();
+    $signupForm.hide();
+
 }
 
-/** When a user first logins in, update the navbar to reflect that. */
-
-function updateNavOnLogin() {
-    console.debug('updateNavOnLogin');
-    $('.main-nav-links').show();
-    $navLogin.hide();
-    $navLogOut.show();
-    $navUserProfile.text(`${currentUser.username}`).show();
-}
 

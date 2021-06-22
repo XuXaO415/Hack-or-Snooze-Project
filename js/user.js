@@ -109,8 +109,16 @@ function saveUserCredentialsInLocalStorage() {
 
 function updateUIOnUserLogin() {
     console.debug('updateUIOnUserLogin');
-
+    putStoriesOnPage();
     $allStoriesList.show();
-
     updateNavOnLogin();
+    generateUserProfile();
+}
+
+/* -- Logged user favorites/un-favorites */
+//declare an async function because we will use 'GET' and 'POST' later calls from API
+async function loggedUserFav(e) {
+    console.debug('loggedUserFav', e);
+    e.preventDefault();
+
 }
