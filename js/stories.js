@@ -50,6 +50,7 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+//The code below waa from 06/22. I forgot where I left off so I just started anew.
 /* Write a fxn that retrieves data from form and then puts that new
 story on the page */
 // async function addNewStory(evt) {
@@ -60,4 +61,34 @@ story on the page */
 //This gives us a chance to fetch the API
 //evt.preventDefault();
 //}
+
+async function addNewStory(e) {
+  console.debug('addNewStory', e)
+  e.preventDefault();
+
+  /* To create a new story The fields are: username, title, author, and url and token are required.
+  -->token, currentUser.loginToken
+  (currentUser.username); remove parenthesis */
+  //jQuery method -> .val() returns the value of the value attribute to the 1st mathched element
+  const username = currentUser.username;
+  const title = $('#story-title').val();
+  const author = $('#story-author').val();
+  const url = $('#story-url').val();
+  let storyData = {
+    token: currentUser.loginToken, username, title, author, url
+  };
+
+  //Code below is from solution
+  let story = storyList.addStory(currentuser, storyData);
+  const story = generateStoryMarkup(story);
+  $allStoriesList.prepend($story);
+  $submitForm.slideUp("slow");
+  $submitForm.trigger("reset");
+};
+
+$submitForm.on('submit', addNewStory);
+
+/*  jquery:4059 Uncaught ReferenceError: getAndShowStoriesOnStart is not defined
+    at HTMLDocument.start (main.js:34) */
+
 
