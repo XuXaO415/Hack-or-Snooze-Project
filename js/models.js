@@ -253,26 +253,19 @@ class User {
     }
   }
 
-  async addFavorite(story) {
-
-  }
 
 
   /*  Will add this in later */
 
-  // async addFavorite(username, storyId) {
-  //   const response = await axios({
-  //     message: 'Favorite added successfully!',
-  //     method: 'POST',
-  //     url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
-  //     data: { token: user.tokenLogin, story: { author, createdAt, storyId, title, updatedAt, url, username } },
-  //   });
-  //   let addedNewFavorite = new Favorites(response.data.user);
-  //   return addedNewFavorite;
+  async addFavorite(username, storyId) {
+    const response = await axios({
+      message: 'Favorite added successfully!',
+      method: 'POST',
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+      data: { token: user.tokenLogin, story: { author, createdAt, storyId, title, updatedAt, url, username } },
+    });
+    let addedNewFavorite = new Favorites(response.data.user);
+    return addedNewFavorite;
 
-  // }
-
-  //   async deleteFavorites(storyId) {
-  //     return this.toggleFavs(storyId, 'GET');
-
+  }
 }
