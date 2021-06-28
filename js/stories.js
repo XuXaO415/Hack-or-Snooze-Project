@@ -50,7 +50,7 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
-//The code below waa from 06/22. I forgot where I left off so I just started anew.
+//The code below was from 06/22. I forgot where I left off so I just started anew.
 /* Write a fxn that retrieves data from form and then puts that new
 story on the page */
 // async function addNewStory(evt) {
@@ -88,7 +88,6 @@ async function addNewStory(e) {
   $submitForm.trigger("reset");
 };
 
-
 $submitForm.on('submit', addNewStory);
 
 
@@ -97,3 +96,18 @@ $submitForm.on('submit', addNewStory);
     at HTMLDocument.start (main.js:34) */
 
 
+/* This is in the wrong section -- add this in later  */
+// async function addFavorite(username, storyId) {
+//   const response = await axios({
+//     message: 'Favorite added successfully!',
+//     method: 'POST',
+//     url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+//     data: { token: user.tokenLogin, story: { author, createdAt, storyId, title, updatedAt, url, username } },
+//   });
+//   let addedNewFavorite = new Favorites(response.data.user);
+//   return addedNewFavorite;
+// }
+
+async function addFavUnfav(e) {
+  console.debug('addFavUnfav', e);
+}
