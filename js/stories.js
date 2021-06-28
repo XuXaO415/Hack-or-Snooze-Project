@@ -43,7 +43,7 @@ function putStoriesOnPage() {
   $allStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
-  for (let story of storyList.stories) {
+  for (let story of storyList.story) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
@@ -70,23 +70,28 @@ async function addNewStory(e) {
   -->token, currentUser.loginToken
   (currentUser.username); remove parenthesis */
   //jQuery method -> .val() returns the value of the value attribute to the 1st mathched element
-  const username = currentUser.username;
+  const username = currentUser; //Uncaught (in promise) TypeError: Cannot read property 'username' of undefined
   const title = $('#story-title').val();
   const author = $('#story-author').val();
   const url = $('#story-url').val();
   let storyData = {
-    token: currentUser.loginToken, username, title, author, url
+    username, title, author, url
   };
+  //    token: currentUser.loginToken,
+  console.log(e, storyData, 'story added');
 
-  //Code below is from solution
-  let story = storyList.addStory(currentuser, storyData);
-  const story = generateStoryMarkup(story);
+  // From solution
+  //let story = storyList.addNewStory(currentUser, storyData);
+  //const story = generateStoryMarkup(story);
   $allStoriesList.prepend($story);
   $submitForm.slideUp("slow");
   $submitForm.trigger("reset");
 };
 
+
 $submitForm.on('submit', addNewStory);
+
+
 
 /*  jquery:4059 Uncaught ReferenceError: getAndShowStoriesOnStart is not defined
     at HTMLDocument.start (main.js:34) */

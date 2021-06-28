@@ -25,6 +25,7 @@ function navLoginClick(evt) {
 
 $navLogin.on('click', navLoginClick);
 
+
 /** When user clicks on navbar submit link, user will be rerouted to submit page */
 /** this function is connected to stories.js-- will later call the .addStory method */
 //Named this fxn from schematics updateNavOnLogin will later be used to updateUIOnUserLogin
@@ -36,7 +37,15 @@ function updateNavOnLogin(evt) {
     $signupForm.show();
     $loginForm.hide();
     $signupForm.hide();
-
 }
 
+
+/* Write a function in nav.js that is called when users click that navbar link. 
+Look at the other function names in that file that do similar things and pick something descriptive and similar. */
+function userNavSubmit(evt) {
+    console.debug('userNavSubmit', evt);
+    hidePageComponents();
+    $allStoriesList.show();
+
+}
 
