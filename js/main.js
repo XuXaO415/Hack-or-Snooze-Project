@@ -5,14 +5,24 @@
 const $body = $('body');
 
 const $storiesLoadingMsg = $('#stories-loading-msg');
-const $allStoriesList = $('#all-stories-list');
+let $allStoriesList = $('#all-stories-list');
+//User's choosen stories
+let $ownStories = $('#my-stories');
+//User's favorite story
+let $favoriteStories = $('#fav-stories');
+// selector that finds all three story lists
+const $storiesLists = $(".stories-list");
 
 const $loginForm = $('#login-form');
 const $signupForm = $('#signup-form');
 
 const $navLogin = $('#nav-login');
-const $navUserProfile = $('#nav-user-profile');
 const $navLogOut = $('#nav-logout');
+const $navUserProfile = $('#nav-user-profile');
+const $navSubmitStory = $('nav-submit-story');
+let $navFavorites = $('#nav-favorites');
+
+
 const $submitForm = $('#submit-form');
 const $story = $('#story-form');
 
@@ -44,6 +54,7 @@ async function start() {
 
     // if we got a logged-in user
     if (currentUser) updateUIOnUserLogin();
+    showStoriesOnPage();
 }
 
 // Once the DOM is entirely loaded, begin the app

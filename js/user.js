@@ -79,7 +79,7 @@ async function checkForRememberedUser() {
     if (!token || !username) return false;
 
     // try to log in with these credentials (will be null if login failed)
-    currentUser = await User.loginViaStoredCredentials(token, username);
+    //currentUser = await User.loginViaStoredCredentials(token, username);
 }
 
 /** Sync current user information to localStorage.
@@ -109,7 +109,7 @@ function saveUserCredentialsInLocalStorage() {
 
 function updateUIOnUserLogin() {
     console.debug('updateUIOnUserLogin');
-    putStoriesOnPage();
+    showStoriesOnPage();
     $allStoriesList.show();
     updateNavOnLogin();
     generateUserProfile();
@@ -134,3 +134,4 @@ async function loggedUserFav(e) {
     e.preventDefault();
 
 }
+

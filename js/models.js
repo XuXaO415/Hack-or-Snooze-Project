@@ -62,6 +62,7 @@ class StoryList {
     });
 
     // turn plain old story objects from API into instances of Story class
+    //moved this to line 275 -> this.favorites = favorites.map(s => new Story(s));
     const stories = response.data.stories.map(story => new Story(story));
 
     // build an instance of our own class using the new array of stories
@@ -111,26 +112,39 @@ class StoryList {
   }
 
 
-  async removeStory(storyId) {
-    //storyId = auto generated ID to reference story docs in routes
-    //need token to link to user -- user is the one who can remove story
-    //const token = user.loginToken;
-    //console.log(token);
+  //   async removeStory(storyId) {
+  //     //storyId = auto generated ID to reference story docs in routes
+  //     //need token to link to user -- user is the one who can remove story
+  //     //const token = user.loginToken;
+  //     //console.log(token);
 
-    const response = await axios({
+  //     const response = await axios({
+  //       method: 'DELETE',
+  //       message: 'Story deleted successfully',
+  //       url: `${BASE_URL}/stories/${storyId}`,
+  //       data: {
+  //         token: user.loginToken, story: { author, createdAt, storyId, title, updatedAt, url, username }
+  //       },
+  //     });
+  //     //console.log(response.data);
+  //     console.log(message, reponse.data);
+  //     let deleteStory = delete Story(response.data);
+  //     return deleteStory;
+  //   }
+  // }
+
+  async deleteStory(storyId) {
+    const reponse = await axios({
       method: 'DELETE',
-      message: 'Story deleted successfully',
-      url: `${BASE_URL}/stories/${storyId}`,
-      data: {
-        token: user.loginToken, story: { author, createdAt, storyId, title, updatedAt, url, username }
-      },
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+      data: { token: this.loginToken },
+      message: 'Favorite Deleted Succesfully!'
     });
-    //console.log(response.data);
-    console.log(message);
-    let deleteStory = delete Story(response.data);
-    return deleteStory;
+    this.stories.filter(story => story.storyId === story.storyId);
+    currentUser.ownStories.pop(reponse.data.story);
   }
 }
+
 
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
@@ -148,7 +162,7 @@ class User {
     this.createdAt = createdAt;
 
     // instantiate Story instances for the user's favorites and ownStories
-    this.favorites = favorites.map(s => new Story(s));
+    //this.favorites = favorites.map(s => new Story(s));
     this.ownStories = ownStories.map(s => new Story(s));
 
     // store the login token on the user so it's easy to find for API calls.
@@ -231,7 +245,7 @@ class User {
         url: `${BASE_URL}/users/${username}`,
         method: 'GET',
         params: {
-          token,
+          token
         },
       });
 
@@ -254,15 +268,50 @@ class User {
   }
 
 
-  async addFavorite(username, storyId) {
-    const response = await axios({
-      message: 'Favorite added successfully!',
+  // async addFavorite(username, storyId) {
+  //   const response = await axios({
+  //     message: 'Favorite added successfully!',
+  //     method: 'POST',
+  //     url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+  //     data: { token: user.tokenLogin, story: { author, createdAt, storyId, title, updatedAt, url, username } },
+  //   });
+  //   let addedNewFavorite = new Favorites(response.data.user);
+  //   return addedNewFavorite;
+  // }
+
+  //This fxn allows logged in users to add a favorited story -- calls on API to add fav
+  async addFavorite(storyId) {
+    await axios({
       method: 'POST',
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
-      data: { token: user.tokenLogin, story: { author, createdAt, storyId, title, updatedAt, url, username } },
+      data: { token: this.loginToken }
     });
-    let addedNewFavorite = new Favorites(response.data.user);
-    return addedNewFavorite;
+    this.favorites = favorites.map(s => new Story(s));
+    console.log('Story added', this.status, this.reponse, this.favorites);
   }
 
+  async unFavorite(storyId) {
+    await axios({
+      method: 'DELETE',
+      url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+      data: { token: this.loginToken }
+    });
+    this.favorites = favorites.map(s => new Story(s));
+    console.log(this.status, this.favorites);
+  }
 }
+//Solutions
+// async addOrRemoveFavorite(story) {
+//   const method = newState === "add" ? "POST" : "DELETE";
+//   const token = user.loginToken;
+//   await axios({
+//     url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+//     method: method,
+//     data: { token },
+//   });
+// }
+
+
+
+
+

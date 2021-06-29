@@ -9,7 +9,7 @@ async function getAndShowStoriesOnStart() {
   storyList = await StoryList.getStories();
   $storiesLoadingMsg.remove();
 
-  putStoriesOnPage();
+  showStoriesOnPage();
 }
 
 /**
@@ -37,13 +37,14 @@ function generateStoryMarkup(story) {
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
-function putStoriesOnPage() {
-  console.debug('putStoriesOnPage');
+function showStoriesOnPage() {
+  console.debug('showStoriesOnPage');
 
   $allStoriesList.empty();
 
   // loop through all of our stories and generate HTML for them
-  for (let story of storyList.story) {
+
+  for (let story of storyList.stories) {
     const $story = generateStoryMarkup(story);
     $allStoriesList.append($story);
   }
@@ -81,8 +82,8 @@ async function addNewStory(e) {
   console.log(e, storyData, 'story added');
 
   // From solution
-  //let story = storyList.addNewStory(currentUser, storyData);
-  //const story = generateStoryMarkup(story);
+  // let story = storyList.addStory(currentUser, storyData);
+  // const story = generateStoryMarkup(story);
   $allStoriesList.prepend($story);
   $submitForm.slideUp("slow");
   $submitForm.trigger("reset");
@@ -108,6 +109,71 @@ $submitForm.on('submit', addNewStory);
 //   return addedNewFavorite;
 // }
 
-async function addFavUnfav(e) {
-  console.debug('addFavUnfav', e);
+// async function addFavUnfav(e) {
+//   console.debug('addFavUnfav', e);
+// }
+
+/* Show logged in users favorited stories  */
+//from solutions
+async function showStoriesOnPage() {
+  console.debug('showStoriesOnPage');
+  $allStoriesList.empty();
+  if (currentUser in $ownStories !== 0) {
+    //debugger;
+    $ownStories.append(`<h5>No Stories add uet!</h5>`);
+  } else {
+    for (let story of currentUser.$ownStories) {
+      let $story = generateStoryMarkup(story, true);
+      $ownStories.append($story);
+    }
+  }
+  $ownStories.show();
 }
+
+async function showFavStories(e) {
+  console.debug('showFavStories');
+
+  const $tgt = $(e.target);
+  const $closestLi = $tgt.closest("li");
+  const storyId = $closestLi.attr("id");
+  const story = storyList.stories.find(s => s.storyId === storyId);
+
+  // see if the item is already favorited (checking by presence of star)
+  if ($tgt.hasClass("fas")) {
+    // currently a favorite: remove from user's fav list and change star
+    await currentUser.removeFavorite(story);
+    $tgt.closest("i").toggleClass("fas far");
+  } else {
+    // currently not a favorite: do the opposite
+    await currentUser.addFavorite(story);
+    $tgt.closest("i").toggleClass("fas far");
+  }
+}
+
+$storiesLists.on("click", ".star", showFavStories);
+
+
+// function putAddedStoriesOnPage() {
+//   console.debug('putAddedStoriesOnPage');
+
+//   $allStoriesList.empty();
+
+//   // loop through all of our stories and generate HTML for them
+//   for (let story of currentUser.ownStories) {
+//     console.log(story)
+//     const $story = generateStoryMarkup(story);
+//     if (checkIfStoryFavorited(story.storyId)) {
+//       $story.find('input').prop('checked', 'true')
+//       console.debug($story);
+//     }
+
+//     $allStoriesList.append($story);
+//     $story.append(`<button type="submit">delete</button>`) //adds delete button in UI for each story
+//     $allStoriesList.append($story);
+//   }
+//   if (currentUser.ownStories.length === 0) {
+//     $allStoriesList.append("You have 0 added stories!");
+//   }
+//   $allStoriesList.attr('data-last-call', 'added-stories'); //tracks most recent filter call
+//   $allStoriesList.show();
+// }
