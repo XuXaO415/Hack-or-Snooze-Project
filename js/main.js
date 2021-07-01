@@ -35,8 +35,6 @@ let $navFavorites = $('#nav-favorites');
  * calling this, individual components can re-show just what they want.
  */
 
-/* Uncaught ReferenceError: getAndShowStoriesOnStart is not defined
-    at HTMLDocument.start (main.js:39)  */
 
 function hidePageComponents() {
     const components = [$allStoriesList, $loginForm, $signupForm, $submitForm];
@@ -50,7 +48,7 @@ async function start() {
 
     // "Remember logged-in user" and log in, if credentials in localStorage
     await checkForRememberedUser();
-    //await getAndShowStoriesOnStart();
+    await getAndShowStoriesOnStart();
     //await addNewStory();
 
     // if we got a logged-in user

@@ -124,14 +124,14 @@ function generateUserProfile() {
     $('#profile-name').text(currentUser.name);
     $('#profile-username').text(currentUser.username);
     $('#profile-password').text(currentUser.password);
-    //$('#profile-account-date').text(currentUser.createdAt.slic(0, 10));
+    $('#profile-account-date').text(currentUser.createdAt.slice(0, 10));
 }
 
 /* -- Logged user favorites/un-favorites */
 //declare an async function because we will use 'GET' and 'POST' later calls from API
-async function loggedUserFav(e) {
-    console.debug('loggedUserFav', e);
-    e.preventDefault();
+// async function loggedUserFav(e) {
+//     console.debug('loggedUserFav', e);
+//     e.preventDefault();
 
-}
+// }
 

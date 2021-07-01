@@ -77,8 +77,8 @@ $body.on("click", "#nav-favorites", navFavoritesClick);
 function navMyStories(evt) {
     console.debug("navMyStories", evt);
     hidePageComponents();
-    showStoriesOnPage();
-    $ownStories.show();
+    //showStoriesOnPage();
+    //ownStories.show();
 }
 
 $body.on("click", "#nav-user-profile", navMyStories);

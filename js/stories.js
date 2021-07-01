@@ -71,13 +71,19 @@ async function addNewStory(e) {
   -->token, currentUser.loginToken
   (currentUser.username); remove parenthesis */
   //jQuery method -> .val() returns the value of the value attribute to the 1st mathched element
-  const username = currentUser; //Uncaught (in promise) TypeError: Cannot read property 'username' of undefined
-  const title = $('#story-title').val();
-  const author = $('#story-author').val();
-  const url = $('#story-url').val();
-  let storyData = {
-    username, title, author, url
-  };
+  // const username = currentUser; //Uncaught (in promise) TypeError: Cannot read property 'username' of undefined
+  // const title = $('#story-title').val();
+  // const author = $('#story-author').val();
+  // const url = $('#story-url').val();
+  // let storyData = {
+  //   username, title, author, url
+  // };
+
+  const title = $("#create-title").val();
+  const url = $("#create-url").val();
+  const author = $("#create-author").val();
+  const username = currentUser.username
+  const storyData = { title, url, author, username };
   //    token: currentUser.loginToken,
   console.log(e, storyData, 'story added');
 
@@ -138,7 +144,7 @@ async function showFavStories(e) {
   const storyId = $closestLi.attr("id");
   const story = storyList.stories.find(s => s.storyId === storyId);
 
-  // see if the item is already favorited (checking by presence of star)
+  // see if the item is already favored (checking by presence of star)
   if ($tgt.hasClass("fas")) {
     // currently a favorite: remove from user's fav list and change star
     await currentUser.removeFavorite(story);
