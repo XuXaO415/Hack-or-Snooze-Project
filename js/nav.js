@@ -29,8 +29,8 @@ $navLogin.on('click', navLoginClick);
 /** When user clicks on navbar submit link, user will be rerouted to submit page */
 /** this function is connected to stories.js-- will later call the .addStory method */
 //Named this fxn from schematics updateNavOnLogin will later be used to updateUIOnUserLogin
-function updateNavOnLogin(evt) {
-    console.debug('updateNavOnLogin', evt);
+function updateNavOnLogin() {
+    console.debug('updateNavOnLogin');
     //What will be displayed on the page after user click evt
     showStoriesOnPage();
     $loginForm.show();
@@ -64,7 +64,10 @@ $navSubmitStory.on("click", navSubmitStoryClick);
 function navFavoritesClick(evt) {
     console.debug("navFavoritesClick", evt);
     hidePageComponents();
-    putFavoritesListOnPage();
+    showStoriesOnPage();
+    $allStoriesList.show();
+    showStoriesOnPage.show();
+    showFavStories.show();
 }
 
 $body.on("click", "#nav-favorites", navFavoritesClick);
@@ -74,11 +77,11 @@ $body.on("click", "#nav-favorites", navFavoritesClick);
 function navMyStories(evt) {
     console.debug("navMyStories", evt);
     hidePageComponents();
-    putUserStoriesOnPage();
+    showStoriesOnPage();
     $ownStories.show();
 }
 
-$body.on("click", "#nav-my-stories", navMyStories);
+$body.on("click", "#nav-user-profile", navMyStories);
 
 /** Show login/signup on click on "login" */
 
@@ -96,7 +99,7 @@ $navLogin.on("click", navLoginClick);
 function navProfileClick(evt) {
     console.debug("navProfileClick", evt);
     hidePageComponents();
-    $userProfile.show();
+    $navUserProfile.show();
 }
 
 $navUserProfile.on("click", navProfileClick);

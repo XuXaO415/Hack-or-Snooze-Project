@@ -6,16 +6,19 @@ const $body = $('body');
 
 const $storiesLoadingMsg = $('#stories-loading-msg');
 let $allStoriesList = $('#all-stories-list');
-//User's choosen stories
+//User's chosen stories
 let $ownStories = $('#my-stories');
 //User's favorite story
 let $favoriteStories = $('#fav-stories');
 // selector that finds all three story lists
 const $storiesLists = $(".stories-list");
-
+/* Form section */
 const $loginForm = $('#login-form');
 const $signupForm = $('#signup-form');
+const $submitForm = $('#submit-form');
+const $story = $('#story-form');
 
+/* Nav section  */
 const $navLogin = $('#nav-login');
 const $navLogOut = $('#nav-logout');
 const $navUserProfile = $('#nav-user-profile');
@@ -23,8 +26,6 @@ const $navSubmitStory = $('nav-submit-story');
 let $navFavorites = $('#nav-favorites');
 
 
-const $submitForm = $('#submit-form');
-const $story = $('#story-form');
 
 //stories.js:84 Uncaught ReferenceError: $submitForm is not defined
 
