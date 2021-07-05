@@ -79,7 +79,7 @@ async function checkForRememberedUser() {
     if (!token || !username) return false;
 
     // try to log in with these credentials (will be null if login failed)
-    //currentUser = await User.loginViaStoredCredentials(token, username);
+    currentUser = await User.loginViaStoredCredentials(token, username);
 }
 
 /** Sync current user information to localStorage.
@@ -113,6 +113,7 @@ function updateUIOnUserLogin() {
     $allStoriesList.show();
     updateNavOnLogin();
     generateUserProfile();
+
 }
 //uncaught reference error: generateUserProfile
 /* attributes: name, username, password;

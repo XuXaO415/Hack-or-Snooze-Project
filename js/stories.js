@@ -64,7 +64,7 @@ story on the page */
 //}
 
 async function addNewStory(e) {
-  console.debug('addNewStory', e)
+  console.debug('addNewStory');
   e.preventDefault();
 
   /* To create a new story The fields are: username, title, author, and url and token are required.
@@ -86,7 +86,7 @@ async function addNewStory(e) {
   const storyData = { title, url, author, username };
   //    token: currentUser.loginToken,
 
-
+  await storyList.addStory(currentUser, storyId);
 
   console.log(e, storyData, 'story added');
 
@@ -96,10 +96,22 @@ async function addNewStory(e) {
   // $allStoriesList.prepend($story);
   // $submitForm.slideUp("slow");
   // $submitForm.trigger("reset");
+
 };
 
 $submitForm.on('submit', addNewStory);
 
+// async function deleteStory(e) {
+//   console.debug('deleteStory');
+//   const $closestLi = $(evt.target).closest("li");
+//   const storyId = $closestLi.attr("id");
+
+//   await storyList.removeStory(currentUser, storyId);
+
+//   // re-generate story list
+//   await putUserStoriesOnPage();
+
+// }
 
 
 /*  jquery:4059 Uncaught ReferenceError: getAndShowStoriesOnStart is not defined
@@ -122,22 +134,23 @@ $submitForm.on('submit', addNewStory);
 //   console.debug('addFavUnfav', e);
 // }
 
-/* Show logged in users favorited stories  */
+/* Show logged in users favorite stories  */
 //from solutions
 async function showStoriesOnPage() {
   console.debug('showStoriesOnPage');
-  $allStoriesList.empty();
+  $ownStories.empty();
   if (currentUser in $ownStories !== 0) {
     //debugger;
-    $ownStories.append(`<h5>No Stories add uet!</h5>`);
+    $ownStories.append(`<h5>No Stories add yet!</h5>`);
   } else {
-    for (let story of currentUser.$ownStories) {
+    for (let story of currentUser.ownStories) {
       let $story = generateStoryMarkup(story, true);
       $ownStories.append($story);
     }
   }
   $ownStories.show();
 }
+
 
 async function showFavStories(e) {
   console.debug('showFavStories');

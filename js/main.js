@@ -22,8 +22,9 @@ const $story = $('#story-form');
 const $navLogin = $('#nav-login');
 const $navLogOut = $('#nav-logout');
 const $navUserProfile = $('#nav-user-profile');
-const $navSubmitStory = $('nav-submit-story');
+const $navSubmitStory = $('#nav-submit-story');
 let $navFavorites = $('#nav-favorites');
+
 
 
 
