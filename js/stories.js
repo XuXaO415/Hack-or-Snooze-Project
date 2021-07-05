@@ -82,17 +82,20 @@ async function addNewStory(e) {
   const title = $("#create-title").val();
   const url = $("#create-url").val();
   const author = $("#create-author").val();
-  const username = currentUser.username
+  const username = currentUser.username;
   const storyData = { title, url, author, username };
   //    token: currentUser.loginToken,
+
+
+
   console.log(e, storyData, 'story added');
 
   // From solution
   // let story = storyList.addStory(currentUser, storyData);
   // const story = generateStoryMarkup(story);
-  $allStoriesList.prepend($story);
-  $submitForm.slideUp("slow");
-  $submitForm.trigger("reset");
+  // $allStoriesList.prepend($story);
+  // $submitForm.slideUp("slow");
+  // $submitForm.trigger("reset");
 };
 
 $submitForm.on('submit', addNewStory);
