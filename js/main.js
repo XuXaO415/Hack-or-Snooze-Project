@@ -25,10 +25,7 @@ const $navUserProfile = $('#nav-user-profile');
 const $navSubmitStory = $('#nav-submit-story');
 let $navFavorites = $('#nav-favorites');
 
-
-
-
-//stories.js:84 Uncaught ReferenceError: $submitForm is not defined
+/******************************************************************** */
 
 
 /** To make it easier for individual components to show just themselves, this
@@ -41,6 +38,10 @@ function hidePageComponents() {
     const components = [$allStoriesList, $loginForm, $signupForm, $submitForm];
     components.forEach(c => c.hide());
 }
+
+
+
+/******************************************************************** */
 
 /** Overall function to kick off the app. */
 

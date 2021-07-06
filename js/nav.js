@@ -78,7 +78,7 @@ function navMyStories(evt) {
     console.debug("navMyStories", evt);
     hidePageComponents();
     //showStoriesOnPage();
-    //ownStories.show();
+    // ownStories.show();
 }
 
 $body.on("click", "#nav-user-profile", navMyStories);

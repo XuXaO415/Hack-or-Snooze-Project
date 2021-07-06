@@ -115,7 +115,7 @@ function updateUIOnUserLogin() {
     generateUserProfile();
 
 }
-//uncaught reference error: generateUserProfile
+/******************************************************************** */
 /* attributes: name, username, password;
  Since we are generating a user profile this is
  connected to a post request */
