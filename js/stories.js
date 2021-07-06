@@ -11,7 +11,7 @@ async function getAndShowStoriesOnStart() {
 
   showStoriesOnPage();
 }
-
+/******************************************************************** 
 /**
  * A render method to render HTML for an individual Story instance
  * - story: an instance of Story
@@ -34,6 +34,31 @@ function generateStoryMarkup(story) {
       </li>
     `);
 }
+
+
+/******************************************************************** */
+/** Make delete button HTML for story */
+
+function getDeleteBtnHTML() {
+  return `
+      <span class="trash-can">
+        <i class="fas fa-trash-alt"></i>
+      </span>`;
+}
+
+/******************************************************************** */
+
+/** Make favorite/not-favorite star for story */
+
+function getStarHTML(story, user) {
+  const isFavorite = user.isFavorite(story);
+  const starType = isFavorite ? "fas" : "far";
+  return `
+      <span class="star">
+        <i class="${starType} fa-star"></i>
+      </span>`;
+}
+/******************************************************************** */
 
 /** Gets list of stories from server, generates their HTML, and puts on page. */
 
@@ -63,38 +88,58 @@ story on the page */
 //evt.preventDefault();
 //}
 
+/******************************************************************** */
 async function addNewStory(e) {
-  console.debug('addNewStory', e)
+  console.debug('addNewStory');
   e.preventDefault();
 
   /* To create a new story The fields are: username, title, author, and url and token are required.
   -->token, currentUser.loginToken
   (currentUser.username); remove parenthesis */
   //jQuery method -> .val() returns the value of the value attribute to the 1st mathched element
-  const username = currentUser; //Uncaught (in promise) TypeError: Cannot read property 'username' of undefined
-  const title = $('#story-title').val();
-  const author = $('#story-author').val();
-  const url = $('#story-url').val();
-  let storyData = {
-    username, title, author, url
-  };
-  //    token: currentUser.loginToken,
+  // const username = currentUser; //Uncaught (in promise) TypeError: Cannot read property 'username' of undefined
+  // const title = $('#story-title').val();
+  // const author = $('#story-author').val();
+  // const url = $('#story-url').val();
+  // let storyData = {
+  //   username, title, author, url
+  // };
+
+  const title = $("#story-title").val();
+  const url = $("#story-url").val();
+  const author = $("#story-author").val();
+  const username = currentUser.username;
+
+  const storyData = { title, url, author, username };
+  const story = await storyList.addStory(currentUser, storyData);
+
+  const storyMarkup = generateStoryMarkup(story);
+  $allStoriesList.prepend(storyMarkup);
+  $submitForm.slideUp("slow");
+  $submitForm.trigger("reset");
+
   console.log(e, storyData, 'story added');
 
   // From solution
   // let story = storyList.addStory(currentUser, storyData);
-  // const story = generateStoryMarkup(story);
-  $allStoriesList.prepend($story);
-  $submitForm.slideUp("slow");
-  $submitForm.trigger("reset");
+
 };
 
 $submitForm.on('submit', addNewStory);
 
 
 
-/*  jquery:4059 Uncaught ReferenceError: getAndShowStoriesOnStart is not defined
-    at HTMLDocument.start (main.js:34) */
+
+/* Delete story */
+
+// async function removeStory(e) {
+//   console.debug('removeStory');
+
+// }
+
+
+
+
 
 
 /* This is in the wrong section -- add this in later  */
@@ -113,22 +158,29 @@ $submitForm.on('submit', addNewStory);
 //   console.debug('addFavUnfav', e);
 // }
 
-/* Show logged in users favorited stories  */
+
+
+
+/******************************************************************** */
+/* Show logged in users favorite stories  */
 //from solutions
-async function showStoriesOnPage() {
-  console.debug('showStoriesOnPage');
-  $allStoriesList.empty();
+async function showUsersStoriesOnPage() {
+  console.debug('showUsersStoriesOnPage');
+  $ownStories.empty();
   if (currentUser in $ownStories !== 0) {
     //debugger;
-    $ownStories.append(`<h5>No Stories add uet!</h5>`);
+    $ownStories.append(`<h5>No Stories add yet!</h5>`);
   } else {
-    for (let story of currentUser.$ownStories) {
+    for (let story of currentUser.ownStories) {
       let $story = generateStoryMarkup(story, true);
       $ownStories.append($story);
     }
   }
   $ownStories.show();
 }
+
+/******************************************************************** */
+
 
 async function showFavStories(e) {
   console.debug('showFavStories');
@@ -138,7 +190,7 @@ async function showFavStories(e) {
   const storyId = $closestLi.attr("id");
   const story = storyList.stories.find(s => s.storyId === storyId);
 
-  // see if the item is already favorited (checking by presence of star)
+  // see if the item is already favored (checking by presence of star)
   if ($tgt.hasClass("fas")) {
     // currently a favorite: remove from user's fav list and change star
     await currentUser.removeFavorite(story);
@@ -151,29 +203,3 @@ async function showFavStories(e) {
 }
 
 $storiesLists.on("click", ".star", showFavStories);
-
-
-// function putAddedStoriesOnPage() {
-//   console.debug('putAddedStoriesOnPage');
-
-//   $allStoriesList.empty();
-
-//   // loop through all of our stories and generate HTML for them
-//   for (let story of currentUser.ownStories) {
-//     console.log(story)
-//     const $story = generateStoryMarkup(story);
-//     if (checkIfStoryFavorited(story.storyId)) {
-//       $story.find('input').prop('checked', 'true')
-//       console.debug($story);
-//     }
-
-//     $allStoriesList.append($story);
-//     $story.append(`<button type="submit">delete</button>`) //adds delete button in UI for each story
-//     $allStoriesList.append($story);
-//   }
-//   if (currentUser.ownStories.length === 0) {
-//     $allStoriesList.append("You have 0 added stories!");
-//   }
-//   $allStoriesList.attr('data-last-call', 'added-stories'); //tracks most recent filter call
-//   $allStoriesList.show();
-// }

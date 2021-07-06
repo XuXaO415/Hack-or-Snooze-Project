@@ -24,8 +24,8 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    let parser = new URL(BASE_URL);
-    return parser.hostname;
+    let parser = new URL(this.url);
+    return parser.host;
   }
 }
 
@@ -107,6 +107,7 @@ class StoryList {
     });
     console.log(response.data);
     let newStory = new Story(response.data.story);
+    this.stories.unshift(newStory);
     return newStory;
 
   }
@@ -127,21 +128,21 @@ class StoryList {
   //       },
   //     });
   //     //console.log(response.data);
-  //     console.log(message, reponse.data);
+  //     console.log(message, response.data);
   //     let deleteStory = delete Story(response.data);
   //     return deleteStory;
   //   }
   // }
 
   async deleteStory(storyId) {
-    const reponse = await axios({
+    const response = await axios({
       method: 'DELETE',
       url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
       data: { token: this.loginToken },
-      message: 'Favorite Deleted Succesfully!'
+      message: 'Favorite Deleted Successfully!'
     });
     this.stories.filter(story => story.storyId === story.storyId);
-    currentUser.ownStories.pop(reponse.data.story);
+    currentUser.ownStories.pop(response.data.story);
   }
 }
 

@@ -79,7 +79,7 @@ async function checkForRememberedUser() {
     if (!token || !username) return false;
 
     // try to log in with these credentials (will be null if login failed)
-    //currentUser = await User.loginViaStoredCredentials(token, username);
+    currentUser = await User.loginViaStoredCredentials(token, username);
 }
 
 /** Sync current user information to localStorage.
@@ -113,8 +113,9 @@ function updateUIOnUserLogin() {
     $allStoriesList.show();
     updateNavOnLogin();
     generateUserProfile();
+
 }
-//uncaught reference error: generateUserProfile
+/******************************************************************** */
 /* attributes: name, username, password;
  Since we are generating a user profile this is
  connected to a post request */
@@ -124,14 +125,14 @@ function generateUserProfile() {
     $('#profile-name').text(currentUser.name);
     $('#profile-username').text(currentUser.username);
     $('#profile-password').text(currentUser.password);
-    //$('#profile-account-date').text(currentUser.createdAt.slic(0, 10));
+    $('#profile-account-date').text(currentUser.createdAt.slice(0, 10));
 }
 
 /* -- Logged user favorites/un-favorites */
 //declare an async function because we will use 'GET' and 'POST' later calls from API
-async function loggedUserFav(e) {
-    console.debug('loggedUserFav', e);
-    e.preventDefault();
+// async function loggedUserFav(e) {
+//     console.debug('loggedUserFav', e);
+//     e.preventDefault();
 
-}
+// }
 
