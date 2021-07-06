@@ -24,8 +24,8 @@ class Story {
 
   getHostName() {
     // UNIMPLEMENTED: complete this function!
-    let parser = new URL(BASE_URL);
-    return parser.hostname;
+    let parser = new URL(this.url);
+    return parser.host;
   }
 }
 
@@ -107,6 +107,7 @@ class StoryList {
     });
     console.log(response.data);
     let newStory = new Story(response.data.story);
+    this.stories.unshift(newStory);
     return newStory;
 
   }

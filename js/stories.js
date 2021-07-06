@@ -79,23 +79,27 @@ async function addNewStory(e) {
   //   username, title, author, url
   // };
 
-  const title = $("#create-title").val();
-  const url = $("#create-url").val();
-  const author = $("#create-author").val();
+  const title = $("#story-title").val();
+  const url = $("#story-url").val();
+  const author = $("#story-author").val();
   const username = currentUser.username;
   const storyData = { title, url, author, username };
   //    token: currentUser.loginToken,
 
-  await storyList.addStory(currentUser, storyId);
+  const story = storyList.addStory(currentUser, storyData);
+
+  const storyMarkup = generateStoryMarkup(story);
+  $allStoriesList.prepend(storyMarkup);
+  $submitForm.slideUp("slow");
+  $submitForm.trigger("reset");
 
   console.log(e, storyData, 'story added');
 
   // From solution
   // let story = storyList.addStory(currentUser, storyData);
-  // const story = generateStoryMarkup(story);
-  // $allStoriesList.prepend($story);
-  // $submitForm.slideUp("slow");
-  // $submitForm.trigger("reset");
+
+  // 
+
 
 };
 
@@ -136,8 +140,8 @@ $submitForm.on('submit', addNewStory);
 
 /* Show logged in users favorite stories  */
 //from solutions
-async function showStoriesOnPage() {
-  console.debug('showStoriesOnPage');
+async function showUsersStoriesOnPage() {
+  console.debug('showUsersStoriesOnPage');
   $ownStories.empty();
   if (currentUser in $ownStories !== 0) {
     //debugger;
