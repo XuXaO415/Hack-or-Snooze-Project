@@ -18,6 +18,7 @@ class Story {
         this.url = url;
         this.username = username;
         this.createdAt = createdAt;
+        //added line below on 07/19/21
         this.story = story;
     }
 
@@ -279,7 +280,7 @@ class User {
     //   return addedNewFavorite;
     // }
 
-    //This fxn allows logged in users to add a favorited story -- calls on API to add fav
+    //This fxn allows logged in users to add a favorite story -- calls on API to add fav
     async addFavorite(storyId) {
         await axios({
             method: 'POST',
@@ -302,11 +303,11 @@ class User {
 }
 //Solutions
 // async addOrRemoveFavorite(story) {
-//   const method = newState === "add" ? "POST" : "DELETE";
-//   const token = user.loginToken;
-//   await axios({
-//     url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
-//     method: method,
-//     data: { token },
-//   });
+//     const method = newState === "add" ? "POST" : "DELETE";
+//     const token = user.loginToken;
+//     await axios({
+//         url: `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+//         method: method,
+//         data: { token },
+//     });
 // }

@@ -111,6 +111,7 @@ async function addNewStory(e) {
     const username = currentUser.username;
 
     const storyData = { title, url, author, username };
+    //added the line below on 07/19/21
     const story = await storyList.addStory(currentUser, storyData);
 
     const storyMarkup = generateStoryMarkup(story);
