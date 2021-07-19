@@ -111,5 +111,8 @@ function updateNavOnLogin() {
     $(".main-nav-links").show();
     $navLogin.hide();
     $navLogOut.show();
+    //Added line below
+    // $loginForm.hide();
+    // $signupForm.hide();
     $navUserProfile.text(`${currentUser.username}`).show();
 }
