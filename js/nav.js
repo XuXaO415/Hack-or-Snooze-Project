@@ -18,6 +18,7 @@ $body.on('click', '#nav-all', navAllStories);
 
 function navLoginClick(evt) {
     console.debug('navLoginClick', evt);
+    //Displays login & signup form
     hidePageComponents();
     $loginForm.show();
     $signupForm.show();
@@ -31,12 +32,13 @@ $navLogin.on('click', navLoginClick);
 //Named this fxn from schematics updateNavOnLogin will later be used to updateUIOnUserLogin
 function updateNavOnLogin() {
     console.debug('updateNavOnLogin');
-    //What will be displayed on the page after user click evt
+    //What will be displayed on page when user logs in
     showStoriesOnPage();
     $loginForm.show();
     $signupForm.show();
     $loginForm.hide();
     $signupForm.hide();
+    // $navFavorites.show();
 }
 
 
@@ -48,7 +50,7 @@ function userNavSubmit(evt) {
     $allStoriesList.show();
     $submitForm.show();
 }
-//$body.on("click", "#nav-all", navAllStories);
+$navUserProfile.on("click", "#nav-all", userNavSubmit);
 
 function navSubmitStoryClick(evt) {
     console.debug("navSubmitStoryClick", evt);
@@ -57,7 +59,8 @@ function navSubmitStoryClick(evt) {
     $submitForm.show();
 }
 
-$navSubmitStory.on("click", navSubmitStoryClick);
+$navSubmitStory.on("click",
+    navSubmitStoryClick);
 
 /** Show favorite stories on click on "favorites" */
 
@@ -65,9 +68,11 @@ function navFavoritesClick(evt) {
     console.debug("navFavoritesClick", evt);
     hidePageComponents();
     showStoriesOnPage();
-    $allStoriesList.show();
-    showStoriesOnPage.show();
-    showFavStories.show();
+    // $navFavorites.show()
+    // $allStoriesList.show();
+
+    // $showFavStories.show();
+    // $navFavorites.show();
 }
 
 $body.on("click", "#nav-favorites", navFavoritesClick);
@@ -77,11 +82,11 @@ $body.on("click", "#nav-favorites", navFavoritesClick);
 function navMyStories(evt) {
     console.debug("navMyStories", evt);
     hidePageComponents();
-    //showStoriesOnPage();
-    // ownStories.show();
+    // showStoriesOnPage();
+    $ownStories.show();
 }
 
-$body.on("click", "#nav-user-profile", navMyStories);
+$body.on("click", "#nav-my-stories", navMyStories);
 
 /** Show login/signup on click on "login" */
 

@@ -11,7 +11,7 @@ class Story {
      *   - {title, author, url, username, storyId, createdAt}
      */
 
-    constructor({ storyId, title, author, url, username, createdAt, story }) {
+    constructor({ storyId, title, author, url, username, createdAt, favorite }) {
         this.storyId = storyId;
         this.title = title;
         this.author = author;
@@ -19,7 +19,9 @@ class Story {
         this.username = username;
         this.createdAt = createdAt;
         //added line below on 07/19/21
-        this.story = story;
+
+        //added 8/3/21
+        this.favorite = favorite;
     }
 
     /** Parses hostname out of URL and returns it. */
@@ -109,6 +111,7 @@ class StoryList {
         });
         console.log(response.data);
         let newStory = new Story(response.data.story);
+        // this.stories.push(newStory);
         this.stories.unshift(newStory);
         // user.ownStories.unshift(newStory);
         return newStory;
@@ -116,32 +119,12 @@ class StoryList {
     }
 
 
-    //   async removeStory(storyId) {
-    //     //storyId = auto generated ID to reference story docs in routes
-    //     //need token to link to user -- user is the one who can remove story
-    //     //const token = user.loginToken;
-    //     //console.log(token);
-
-    //     const response = await axios({
-    //       method: 'DELETE',
-    //       message: 'Story deleted successfully',
-    //       url: `${BASE_URL}/stories/${storyId}`,
-    //       data: {
-    //         token: user.loginToken, story: { author, createdAt, storyId, title, updatedAt, url, username }
-    //       },
-    //     });
-    //     //console.log(response.data);
-    //     console.log(message, response.data);
-    //     let deleteStory = delete Story(response.data);
-    //     return deleteStory;
-    //   }
-    // }
-
     async deleteStory(storyId) {
         const response = await axios({
             method: 'DELETE',
             url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
-            data: { token: this.loginToken },
+            data: { token: currentUser.loginToken },
+            // data: { token: this.loginToken },
             message: 'Favorite Deleted Successfully!'
         });
         this.stories.filter(story => story.storyId === story.storyId);
@@ -149,6 +132,15 @@ class StoryList {
     }
 }
 
+// async editStory(storyId) {
+//     const response = await axios({
+//         method: 'PATCH',
+//         url: `{BASE_URL}/stories/${storyId}`,
+//         data: { token: currentUser.loginToken, story: { title, author, url } }
+//     });
+//     this.stories.filter(story => story.storyId === story.storyId);
+//     currentUser.ownStories.append(response.data.story)
+// }
 
 /******************************************************************************
  * User: a user in the system (only used to represent the current user)
@@ -166,7 +158,7 @@ class User {
         this.createdAt = createdAt;
 
         // instantiate Story instances for the user's favorites and ownStories
-        //this.favorites = favorites.map(s => new Story(s));
+        // this.favorites = favorites.map(s => new Story(s));
         this.ownStories = ownStories.map(s => new Story(s));
 
         // store the login token on the user so it's easy to find for API calls.
@@ -285,20 +277,23 @@ class User {
         await axios({
             method: 'POST',
             url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
-            data: { token: this.loginToken }
+            data: { token: this.loginToken },
         });
+        // storyId.favorite = true;
         this.favorites = favorites.map(s => new Story(s));
-        console.log('Story added', this.status, this.reponse, this.favorites);
+        console.log('Story added', this.status, this.response, this.favorites);
     }
 
-    async unFavorite(storyId) {
+    async deleteFavorite(storyId) {
         await axios({
             method: 'DELETE',
             url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
             data: { token: this.loginToken }
         });
+        // storyId.favorite = false;
+
         this.favorites = favorites.map(s => new Story(s));
-        console.log(this.status, this.favorites);
+        console.log('Story deleted', this.status, this.favorites);
     }
 }
 //Solutions

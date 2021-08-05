@@ -46,6 +46,16 @@ function getDeleteBtnHTML() {
       </span>`;
 }
 
+function deleteStory() {
+    console.debug('deleteStory');
+    const $closestLi = document.querySelector('li:last-child');
+    $closestLi.parentElement.remove.child($closestLi);
+    const storyId = $closestLi.attr('id');
+    // await storyList.removeStory(currentUser, storyId);
+    // await showUsersStoriesOnPage();
+}
+$ownStories.on('click', '.trash-can',
+    deleteStory);
 /******************************************************************** */
 
 /** Make favorite/not-favorite star for story */
@@ -64,7 +74,6 @@ function getStarHTML(story, user) {
 
 function showStoriesOnPage() {
     console.debug('showStoriesOnPage');
-
     $allStoriesList.empty();
 
     // loop through all of our stories and generate HTML for them
@@ -87,6 +96,18 @@ story on the page */
 //This gives us a chance to fetch the API
 //evt.preventDefault();
 //}
+
+function showFavStoriesOnPage() {
+    $allStoriesList.empty();
+    let userFav = storyList.stories.filter(story => story.favorite);
+    //iterates thru' story in userFav
+    for (let story of userFav) {
+        const $story = generateStoryMarkup(story);
+        //appends to story list
+        $allStoriesList.append($story);
+    }
+    $allStoriesList.show()
+}
 
 /******************************************************************** */
 async function addNewStory(e) {
@@ -111,13 +132,13 @@ async function addNewStory(e) {
     const username = currentUser.username;
 
     const storyData = { title, url, author, username };
-    //added the line below on 07/19/21
+    //added this code on 07/19/21
     const story = await storyList.addStory(currentUser, storyData);
 
     const storyMarkup = generateStoryMarkup(story);
     $allStoriesList.prepend(storyMarkup);
-    $submitForm.slideUp("slow");
-    $submitForm.trigger("reset");
+    // $submitForm.slideUp("slow");
+    // $submitForm.trigger("reset");
 
     console.log(e, storyData, 'story added');
 
@@ -137,28 +158,6 @@ $submitForm.on('submit', addNewStory);
 //   console.debug('removeStory');
 
 // }
-
-
-
-
-
-
-/* This is in the wrong section -- add this in later  */
-// async function addFavorite(username, storyId) {
-//   const response = await axios({
-//     message: 'Favorite added successfully!',
-//     method: 'POST',
-//     url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
-//     data: { token: user.tokenLogin, story: { author, createdAt, storyId, title, updatedAt, url, username } },
-//   });
-//   let addedNewFavorite = new Favorites(response.data.user);
-//   return addedNewFavorite;
-// }
-
-// async function addFavUnfav(e) {
-//   console.debug('addFavUnfav', e);
-// }
-
 
 
 
@@ -204,3 +203,7 @@ async function showFavStories(e) {
 }
 
 $storiesLists.on("click", ".star", showFavStories);
+
+
+
+/******************************************************************** */
