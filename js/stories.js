@@ -6,6 +6,7 @@ let storyList;
 /** Get and show stories when site first loads. */
 
 async function getAndShowStoriesOnStart() {
+    console.debug('getAndShowStoriesOnStart');
     storyList = await StoryList.getStories();
     $storiesLoadingMsg.remove();
 
@@ -15,16 +16,18 @@ async function getAndShowStoriesOnStart() {
 /**
  * A render method to render HTML for an individual Story instance
  * - story: an instance of Story
- *
+ * from solutions: showDelete
  * Returns the markup for the story.
  */
 
-function generateStoryMarkup(story) {
+function generateStoryMarkup(story, showDeleteBtn = false) {
+    console.debug('generateStoryMarkup');
     // console.debug("generateStoryMarkup", story);
 
     const hostName = story.getHostName();
     return $(`
       <li id="${story.storyId}">
+        ${showDeleteBtn ? getDeleteBtnHTML() : ""}
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -46,21 +49,30 @@ function getDeleteBtnHTML() {
       </span>`;
 }
 
-function deleteStory() {
+// function deleteStory() {
+//     console.debug('deleteStory');
+//     const $closestLi = document.querySelector('li:last-child');
+//     $closestLi.parentElement.remove.child($closestLi);
+//     const storyId = $closestLi.attr('id');
+//     // await storyList.removeStory(currentUser, storyId);
+//     // await showUsersStoriesOnPage();
+// }
+// $ownStories.on('click', '.trash-can',
+//     deleteStory);
+
+async function deleteStory() {
     console.debug('deleteStory');
-    const $closestLi = document.querySelector('li:last-child');
-    $closestLi.parentElement.remove.child($closestLi);
+    const $closestLi = $(evt.target).closest('li');
     const storyId = $closestLi.attr('id');
-    // await storyList.removeStory(currentUser, storyId);
-    // await showUsersStoriesOnPage();
+    await storyList.deleteStory(currentUser, storyId);
+    await showUsersStoriesOnPage();
 }
-$ownStories.on('click', '.trash-can',
-    deleteStory);
 /******************************************************************** */
 
 /** Make favorite/not-favorite star for story */
 
 function getStarHTML(story, user) {
+    console.debug(getStartHTML);
     const isFavorite = user.isFavorite(story);
     const starType = isFavorite ? "fas" : "far";
     return `
@@ -98,6 +110,7 @@ story on the page */
 //}
 
 function showFavStoriesOnPage() {
+    console.debug('showFavStoriesOnPage');
     $allStoriesList.empty();
     let userFav = storyList.stories.filter(story => story.favorite);
     //iterates thru' story in userFav

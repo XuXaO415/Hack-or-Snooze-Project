@@ -24,12 +24,17 @@ class Story {
         this.favorite = favorite;
     }
 
-    /** Parses hostname out of URL and returns it. */
+    /** Parses hostname out of URL and returns it. Huh? */
 
     getHostName() {
-        // UNIMPLEMENTED: complete this function!
+        //DONE TODO: UNIMPLEMENTED: complete this function!
+        /* Assign parser to new url, then returns host */
         let parser = new URL(this.url);
         return parser.host;
+
+        // const parser = new URL(this.url);
+        // return parser.host;
+
     }
 }
 
@@ -81,25 +86,6 @@ class StoryList {
      *  username, title, author, and url
      */
 
-    /** 
-'token': 'YOUR_TOKEN_HERE', \
-'story': { \
-'author': 'Matt Lane', \
-'title': 'The best story ever', \
-'url': 'http://google.com' \
-} \
-}"; */
-
-    // var body = "{ \
-    //   'user': { \
-    //     'username': 'test', \
-    //     'password': 'password' \
-    //   } \
-
-    //user, newStory
-
-
-    /* Response body from hack or snooze */
 
     // }
 
@@ -119,16 +105,24 @@ class StoryList {
     }
 
 
-    async deleteStory(storyId) {
+    async deleteStory(storyId, currentUser) {
         const response = await axios({
             method: 'DELETE',
-            url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+            // url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
+            url: `${BASE_URL}/stories/${storyId}`,
             data: { token: currentUser.loginToken },
             // data: { token: this.loginToken },
             message: 'Favorite Deleted Successfully!'
         });
-        this.stories.filter(story => story.storyId === story.storyId);
+        /* using 'this.stories' to reference the stories object. Then, by using filter(story => ...) to filter for strict equality. 
+        If storyIds do match, will pop last element in the array
+        Note: articulate this explanation for a clearer understanding*/
+
+        /*filter out story ID for deletion */
+        this.stories = this.stories.filter(story => story.storyId === story.storyId);
         currentUser.ownStories.pop(response.data.story);
+        currentUser.favorites = currentUser.favorites(story => storyId === story.storyId);
+        currentUser.favorites.pop(response.data.story);
     }
 }
 
@@ -158,7 +152,7 @@ class User {
         this.createdAt = createdAt;
 
         // instantiate Story instances for the user's favorites and ownStories
-        // this.favorites = favorites.map(s => new Story(s));
+        this.favorites = favorites.map(s => new Story(s));
         this.ownStories = ownStories.map(s => new Story(s));
 
         // store the login token on the user so it's easy to find for API calls.
@@ -279,8 +273,9 @@ class User {
             url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
             data: { token: this.loginToken },
         });
-        // storyId.favorite = true;
-        this.favorites = favorites.map(s => new Story(s));
+        storyId.favorite = true;
+        // this.favorites = favorites.map(s => new Story(s));
+        this.favorites.push(story);
         console.log('Story added', this.status, this.response, this.favorites);
     }
 
@@ -290,8 +285,7 @@ class User {
             url: `${BASE_URL}/users/${username}/favorites/${storyId}`,
             data: { token: this.loginToken }
         });
-        // storyId.favorite = false;
-
+        storyId.favorite = false;
         this.favorites = favorites.map(s => new Story(s));
         console.log('Story deleted', this.status, this.favorites);
     }
