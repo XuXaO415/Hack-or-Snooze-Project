@@ -14,7 +14,7 @@ function navAllStories(evt) {
 
 $body.on('click', '#nav-all', navAllStories);
 
-/** Show login/signup on click on "login" */
+/** Show login/create account form when "login/signup" is clicked */
 
 function navLoginClick(evt) {
     console.debug('navLoginClick', evt);
@@ -34,11 +34,11 @@ function updateNavOnLogin() {
     console.debug('updateNavOnLogin');
     //What will be displayed on page when user logs in
     showStoriesOnPage();
-    $loginForm.show();
-    $signupForm.show();
+    // $loginForm.show();
+    // $signupForm.show();
     $loginForm.hide();
     $signupForm.hide();
-    // $navFavorites.show();
+    $navFavorites.show();
 }
 
 

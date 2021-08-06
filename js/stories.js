@@ -21,7 +21,7 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story, showDeleteBtn = false) {
-    console.debug('generateStoryMarkup');
+    // console.debug('generateStoryMarkup');
     // console.debug("generateStoryMarkup", story);
 
     const hostName = story.getHostName();
@@ -163,37 +163,8 @@ async function addNewStory(e) {
 $submitForm.on('submit', addNewStory);
 
 
-
-
-/* Delete story */
-
-// async function removeStory(e) {
-//   console.debug('removeStory');
-
-// }
-
-
-
 /******************************************************************** */
-/* Show logged in users favorite stories  */
-//from solutions
-async function showUsersStoriesOnPage() {
-    console.debug('showUsersStoriesOnPage');
-    $ownStories.empty();
-    if (currentUser in $ownStories !== 0) {
-        //debugger;
-        $ownStories.append(`<h5>No Stories add yet!</h5>`);
-    } else {
-        for (let story of currentUser.ownStories) {
-            let $story = generateStoryMarkup(story, true);
-            $ownStories.append($story);
-        }
-    }
-    $ownStories.show();
-}
-
-/******************************************************************** */
-
+//From solutions
 
 async function showFavStories(e) {
     console.debug('showFavStories');
@@ -217,6 +188,34 @@ async function showFavStories(e) {
 
 $storiesLists.on("click", ".star", showFavStories);
 
+
+/******************************************************************** */
+/* Show logged in user's favorite stories  */
+//from solutions
+async function showUsersStoriesOnPage() {
+    console.debug('showUsersStoriesOnPage');
+    // $ownStories.empty();
+    // if (currentUser in $ownStories !== 0) {
+    //     //debugger;
+    //     $ownStories.append(`<h5>No Stories add yet!</h5>`);
+    // } else {
+    //     for (let story of currentUser.ownStories) {
+    //         let $story = generateStoryMarkup(story, true);
+    //         $ownStories.append($story);
+    //     }
+    // }
+    // $ownStories.show();
+    $favoriteStories.empty();
+    if (currentUser.favorite.length === 0) {
+        $favoriteStories.append("<h5>No favorites added!</h5>");
+    } else {
+        for (let story of currentUser.favorite) {
+            const $story = generateStoryMarkup(story);
+            $favoriteStories.append($story);
+        }
+    }
+    $favoriteStories.show();
+}
 
 
 /******************************************************************** */
