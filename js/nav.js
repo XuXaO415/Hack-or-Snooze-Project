@@ -8,7 +8,7 @@
 
 function navAllStories(evt) {
     console.debug('navAllStories', evt);
-    hidePageComponents();
+    // hidePageComponents();
     showStoriesOnPage();
 }
 
@@ -18,7 +18,7 @@ $body.on('click', '#nav-all', navAllStories);
 
 function navLoginClick(evt) {
     console.debug('navLoginClick', evt);
-    //Displays login & signup form
+    // Displays login & signup form
     hidePageComponents();
     $loginForm.show();
     $signupForm.show();
@@ -29,10 +29,10 @@ $navLogin.on('click', navLoginClick);
 
 /** When user clicks on navbar submit link, user will be rerouted to submit page */
 /** this function is connected to stories.js-- will later call the .addStory method */
-//Named this fxn from schematics updateNavOnLogin will later be used to updateUIOnUserLogin
+// Named this fxn from schematics updateNavOnLogin will later be used to updateUIOnUserLogin
 function updateNavOnLogin() {
     console.debug('updateNavOnLogin');
-    //What will be displayed on page when user logs in
+    // What will be displayed on page when user logs in
     showStoriesOnPage();
     // $loginForm.show();
     // $signupForm.show();
@@ -59,8 +59,7 @@ function navSubmitStoryClick(evt) {
     $submitForm.show();
 }
 
-$navSubmitStory.on("click",
-    navSubmitStoryClick);
+$navSubmitStory.on("click", navSubmitStoryClick);
 
 /** Show favorite stories on click on "favorites" */
 
@@ -68,12 +67,18 @@ function navFavoritesClick(evt) {
     console.debug("navFavoritesClick", evt);
     hidePageComponents();
     showStoriesOnPage();
-    // $navFavorites.show()
+    $navFavorites.show()
     // $allStoriesList.show();
 
     // $showFavStories.show();
-    // $navFavorites.show();
+
 }
+
+function hideLogin() {
+    $loginForm.hide();
+    $signupForm.hide();
+}
+
 
 $body.on("click", "#nav-favorites", navFavoritesClick);
 
@@ -99,12 +104,14 @@ function navLoginClick(evt) {
 
 $navLogin.on("click", navLoginClick);
 
+/** Hide login   */
+
 /** Hide everything but profile on click on "profile" */
 
 function navProfileClick(evt) {
     console.debug("navProfileClick", evt);
     hidePageComponents();
-    $navUserProfile.show();
+    // $navUserProfile.show();
 }
 
 $navUserProfile.on("click", navProfileClick);
@@ -116,8 +123,10 @@ function updateNavOnLogin() {
     $(".main-nav-links").show();
     $navLogin.hide();
     $navLogOut.show();
-    //Added line below
+    // Added line below
     // $loginForm.hide();
     // $signupForm.hide();
-    $navUserProfile.text(`${currentUser.username}`).show();
+    $navUserProfile.text(`${
+        currentUser.username
+    }`).show();
 }
